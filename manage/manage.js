@@ -57,32 +57,62 @@
         // groups
         let groupSelector = '[data-is-group]';
 
-        allGroupsNodes = Array.from(document.querySelectorAll(groupSelector));
+        allGroupsNodes = Array.from(document.querySelectorAll('[data-is-group]'));
 
-        allGroupsNodes.forEach(function(group) {
-            group.addEventListener('dragstart', groupHandleDragStart, false);
-            group.addEventListener('dragenter', groupHandleDragEnter, false);
-            group.addEventListener('dragover', groupHandleDragOver, false);
-            group.addEventListener('dragleave', groupHandleDragLeave, false);
-            group.addEventListener('drop', groupHandleDrop, false);
-            group.addEventListener('dragend', groupHandleDragEnd, false);
-        });
+        // allGroupsNodes.forEach(function(group) {
+        //     group.addEventListener('dragstart', groupHandleDragStart, false);
+        //     group.addEventListener('dragenter', groupHandleDragEnter, false);
+        //     group.addEventListener('dragover', groupHandleDragOver, false);
+        //     group.addEventListener('dragleave', groupHandleDragLeave, false);
+        //     group.addEventListener('drop', groupHandleDrop, false);
+        //     group.addEventListener('dragend', groupHandleDragEnd, false);
+        // });
 
         // tabs
         let tabSelector = '[data-is-tab]';
 
         allTabsNodes = Array.from(document.querySelectorAll(tabSelector));
 
-        allTabsNodes.forEach(function(tab) {
-            tab.addEventListener('dragstart', tabHandleDragStart, false);
-            tab.addEventListener('dragenter', tabHandleDragEnter, false);
-            tab.addEventListener('dragover', tabHandleDragOver, false);
-            tab.addEventListener('dragleave', tabHandleDragLeave, false);
-            tab.addEventListener('drop', tabHandleDrop, false);
-            tab.addEventListener('dragend', tabHandleDragEnd, false);
-        });
-    }
+        let resultNode = $('#result');
 
+        Sortable.create(resultNode, {
+            group: {
+                name: 'groups',
+                // pull: false,
+                // put: ['tabs'],
+            },
+            sort: true,
+            draggable: '.group',
+            handle: '.group',
+            filter: '.new',
+        });
+
+        Array.from(document.querySelectorAll('[data-is-group]'))
+            .forEach(function(groupNode) {
+                Sortable.create(groupNode.querySelector('.body'), {
+                    group: {
+                        name: 'tabs',
+                        // pull: true,
+                        // put: ['tabs'],
+                    },
+                    sort: true,
+                    draggable: '.tab',
+                    handle: '.tab',
+                    filter: '.new',
+                });
+            });
+
+
+        // allTabsNodes.forEach(function(tab) {
+        //     tab.addEventListener('dragstart', tabHandleDragStart, false);
+        //     tab.addEventListener('dragenter', tabHandleDragEnter, false);
+        //     tab.addEventListener('dragover', tabHandleDragOver, false);
+        //     tab.addEventListener('dragleave', tabHandleDragLeave, false);
+        //     tab.addEventListener('drop', tabHandleDrop, false);
+        //     tab.addEventListener('dragend', tabHandleDragEnd, false);
+        // });
+    }
+/*
 
     // GROUPS
     let dragGroupNode = null,
@@ -124,7 +154,7 @@
         if (!dragGroupNode) {
             return;
         }
-console.log('groupHandleDragLeave', this, e);
+        console.log('groupHandleDragLeave', this, e);
         prevOverElement = e.target;
 
         // if (e.target.matches && e.target.matches('[data-is-group]')) {
@@ -136,14 +166,14 @@ console.log('groupHandleDragLeave', this, e);
         if (!dragGroupNode) {
             return;
         }
-// console.log('groupHandleDragOver', this, e);
+        // console.log('groupHandleDragOver', this, e);
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
         return false;
     }
 
     function groupHandleDrop(e) {
-console.log('groupHandleDrop', this, e);
+        console.log('groupHandleDrop', this, e);
         if (!dragGroupNode) {
             return;
         }
@@ -162,7 +192,7 @@ console.log('groupHandleDrop', this, e);
     }
 
     function groupHandleDragEnd(e) {
-console.log('groupHandleDragEnd', this, e);
+        console.log('groupHandleDragEnd', this, e);
         if (!dragGroupNode) {
             return;
         }
@@ -326,7 +356,7 @@ console.log('groupHandleDragEnd', this, e);
 
 
 
-
+*/
 
 
 
